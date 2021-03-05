@@ -10,29 +10,29 @@ const Shopcart = () => import('../views/shopcart/Shopcart')
 Vue.use(VueRouter)
 
 const routes = [{
-        path: '',
-        redirect: '/home '
-    },
-    {
-        path: "/home",
-        component: Home
-    },
-    {
-        path: "/category",
-        component: Category
-    },
-    {
-        path: "/profile",
-        component: Profile
-    },
-    {
-        path: "/shopcart",
-        component: Shopcart
-    },
+    path: '',
+    redirect: '/home '
+  },
+  {
+    path: "/home",
+    component: Home
+  },
+  {
+    path: "/category",
+    component: Category
+  },
+  {
+    path: "/profile",
+    component: Profile
+  },
+  {
+    path: "/shopcart",
+    component: Shopcart
+  },
 ]
 const router = new VueRouter({
-    routes,
-    mode: 'history'
+  routes,
+  mode: 'history'
 })
 
 export default router
