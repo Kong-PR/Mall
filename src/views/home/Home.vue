@@ -7,7 +7,9 @@
     <tab-control
       class="tab-control"
       :titles="['流行', '新款', '精选']"
+      @tabClick="tabClick"
     ></tab-control>
+    <goods-list :goodsList="showGoods" />
     <ul>
       <li>列表</li>
       <li>列表</li>
@@ -25,6 +27,7 @@ import FeatureView from "./childComps/FeatureView";
 
 import NavBar from "components/common/navbar/NavBar";
 import TabControl from "components/content/TabControl/TabControl";
+import GoodsList from "components/content/goods/GoodsList";
 
 import { getHomeMultidata, getHomeGoods } from "network/home";
 export default {
@@ -35,16 +38,18 @@ export default {
     FeatureView,
     NavBar,
     TabControl,
+    GoodsList,
   },
   data() {
     return {
       banners: [],
       recommends: [],
       goods: {
-        pop: { page: 0, list: [] },
-        new: { page: 0, list: [] },
-        sell: { page: 0, list: [] },
+        pop: { page: 1, list: [] },
+        new: { page: 1, list: [] },
+        sell: { page: 1, list: [] },
       },
+      currentType: "pop",
     };
   },
   created() {
@@ -52,8 +57,11 @@ export default {
     this.getHomeMultidata();
     // 请求商品数据
     this.getHomeGoods("pop");
+    this.getHomeGoods("new");
+    this.getHomeGoods("sell");
   },
   methods: {
+    //网络请求相关方法
     getHomeMultidata() {
       getHomeMultidata().then((res) => {
         console.log(res);
@@ -64,10 +72,30 @@ export default {
     getHomeGoods(type) {
       const page = this.goods[type].page;
       getHomeGoods(type, page).then((res) => {
-        console.log(res);
+        console.log("testGoods" + res);
         this.goods[type].list.push(...res.data.list);
         this.goods[type].page++;
       });
+    },
+    //事件监听相关方法
+    tabClick(index) {
+      console.log(index);
+      switch (index) {
+        case 0:
+          this.currentType = "pop";
+          break;
+        case 1:
+          this.currentType = "new";
+          break;
+        case 2:
+          this.currentType = "sell";
+          break;
+      }
+    },
+  },
+  computed: {
+    showGoods() {
+      return this.goods[this.currentType].list;
     },
   },
 };
@@ -89,5 +117,6 @@ export default {
 .tab-control {
   position: sticky;
   top: 44px;
+  z-index: 9;
 }
 </style>
