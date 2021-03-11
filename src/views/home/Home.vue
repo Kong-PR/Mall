@@ -69,6 +69,10 @@ export default {
     this.getHomeGoods("pop");
     this.getHomeGoods("new");
     this.getHomeGoods("sell");
+    // 监听item中的图片加载
+    this.$bus.$on("itemImgLoad", () => {
+      this.$refs.scroll.refresh();
+    });
   },
   methods: {
     //网络请求相关方法
@@ -111,7 +115,7 @@ export default {
       this.isShowBackTop = position.y < -1000;
     },
     contentPullingUp() {
-      this.getHomeGoods(this.currentType);
+      // this.getHomeGoods(this.currentType);
     },
   },
   computed: {
