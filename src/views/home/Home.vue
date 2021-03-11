@@ -7,6 +7,8 @@
       ref="scroll"
       :probe-type="3"
       @scroll="contentScroll"
+      :pull-up-load="true"
+      @pullingUp="contentPullingUp"
     >
       <home-swiper :banners="banners"></home-swiper>
       <recommend-view :recommends="recommends"></recommend-view>
@@ -80,9 +82,9 @@ export default {
     getHomeGoods(type) {
       const page = this.goods[type].page;
       getHomeGoods(type, page).then((res) => {
-        console.log("testGoods" + res);
         this.goods[type].list.push(...res.data.list);
         this.goods[type].page++;
+        this.$refs.scroll.finishPullUp();
       });
     },
     //事件监听相关方法
@@ -107,6 +109,9 @@ export default {
     contentScroll(position) {
       // console.log(position);
       this.isShowBackTop = position.y < -1000;
+    },
+    contentPullingUp() {
+      this.getHomeGoods(this.currentType);
     },
   },
   computed: {

@@ -12,6 +12,7 @@ export default {
   name: "Scroll",
   props: {
     probeType: 0,
+    pullUpLoad: false,
   },
   data() {
     return {
@@ -19,21 +20,31 @@ export default {
     };
   },
   mounted() {
+    // 创建滚动对象
     this.scroll = new BScroll(this.$refs.wrapper, {
       click: true,
       probeType: this.probeType,
-      pullUpLoad: true,
+      pullUpLoad: this.pullUpLoad,
       mouseWheel: true,
       // observeDOM: true,
     });
+    //监听滚动事件
     this.scroll.on("scroll", (position) => {
       // console.log(position);
       this.$emit("scroll", position);
     });
+    // 监听上拉事件
+    this.scroll.on("pullingUp", () => {
+      this.$emit("pullingUp");
+    });
   },
+
   methods: {
     scrollTo(x, y, time = 500) {
       this.scroll.scrollTo(x, y, time);
+    },
+    finishPullUp() {
+      this.scroll.finishPullUp();
     },
   },
 };
