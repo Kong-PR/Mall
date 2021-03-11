@@ -1,6 +1,8 @@
 <template>
   <div class="goods-item">
-    <img :src="goodsListItem.show.img" alt="" />
+    <a :href="goodsListItem.showLarge.img">
+      <img :src="goodsListItem.show.img" alt="" />
+    </a>
     <div class="goods-info">
       <p>{{ goodsListItem.title }}</p>
       <span class="price">{{ goodsListItem.price }}</span>
