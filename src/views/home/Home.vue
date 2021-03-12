@@ -69,12 +69,24 @@ export default {
     this.getHomeGoods("pop");
     this.getHomeGoods("new");
     this.getHomeGoods("sell");
+  },
+  mounted() {
+    const refresh = this.debounce(this.$refs.scroll.refresh, 500);
     // 监听item中的图片加载
     this.$bus.$on("itemImgLoad", () => {
-      this.$refs.scroll.refresh();
+      refresh();
     });
   },
   methods: {
+    debounce(func, delay) {
+      let timer = null;
+      return function (...args) {
+        if (timer) clearTimeout(timer);
+        timer = setTimeout(() => {
+          func.apply(this, args);
+        }, delay);
+      };
+    },
     //网络请求相关方法
     getHomeMultidata() {
       getHomeMultidata().then((res) => {
