@@ -47,6 +47,7 @@ import BackTop from "components/content/backTop/BackTop";
 
 import { getHomeMultidata, getHomeGoods } from "network/home";
 import { debounce } from "common/utils";
+import { itemListenerMixin } from "common/mixin";
 export default {
   name: "Home",
   components: {
@@ -75,6 +76,7 @@ export default {
       saveY: 0,
     };
   },
+  mixins: [itemListenerMixin],
   created() {
     // 请求多个数据;
     this.getHomeMultidata();
@@ -83,18 +85,12 @@ export default {
     this.getHomeGoods("new");
     this.getHomeGoods("sell");
   },
-  mounted() {
-    const refresh = debounce(this.$refs.scroll.refresh, 500);
-    // 监听item中的图片加载
-    this.$bus.$on("itemImgLoad", () => {
-      refresh();
-    });
-  },
+  mounted() {},
   methods: {
     //网络请求相关方法
     getHomeMultidata() {
       getHomeMultidata().then((res) => {
-        console.log(res);
+        // console.log(res);
         this.banners = res.data.banner.list;
         this.recommends = res.data.recommend.list;
       });
@@ -109,7 +105,7 @@ export default {
     },
     //事件监听相关方法
     tabClick(index) {
-      console.log(index);
+      // console.log(index);
       switch (index) {
         case 0:
           this.currentType = "pop";
@@ -125,7 +121,7 @@ export default {
       this.$refs.tabControl2.currentIndex = index;
     },
     backClick() {
-      console.log("点击");
+      // console.log("点击");
       this.$refs.scroll.scrollTo(0, 0, 500);
     },
     contentScroll(position) {
@@ -152,7 +148,10 @@ export default {
     this.$refs.scroll.refresh();
   },
   deactivated() {
+    // 保存Y值
     this.saveY = this.$refs.scroll.scroll.y;
+    // 取消全局监听
+    this.$bus.$off("itemImgLoad", this.itemImgListener);
   },
 };
 </script>

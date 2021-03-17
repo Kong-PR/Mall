@@ -1,7 +1,7 @@
 <template>
   <div class="goods-item" @click="itemClick">
     <!-- <a :href="goodsListItem.showLarge.img"> -->
-    <img :src="goodsListItem.show.img" alt="" @load="imgLoad" />
+    <img :src="showImage" alt="" @load="imgLoad" />
     <!-- <img :src="goodsListItem.image" alt="" @load="imgLoad" /> -->
     <!-- </a> -->
     <div class="goods-info">
@@ -23,6 +23,11 @@ export default {
       },
     },
   },
+  computed: {
+    showImage() {
+      return this.goodsListItem.image || this.goodsListItem.show.img;
+    },
+  },
   methods: {
     imgLoad() {
       this.$bus.$emit("itemImgLoad");
@@ -34,7 +39,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .goods-item {
   padding-bottom: 40px;
   position: relative;

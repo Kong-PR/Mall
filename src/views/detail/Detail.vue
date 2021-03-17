@@ -1,7 +1,7 @@
 <template>
   <div id="detail">
     <detail-nav-bar class="detail-nav" />
-    <scroll class="content" refs="scroll">
+    <scroll class="content" ref="scroll">
       <detail-swiper :topImages="topImages"></detail-swiper>
       <detail-base-info :goods="goods"></detail-base-info>
       <detail-shop-info :shop="shop"></detail-shop-info>
@@ -11,7 +11,7 @@
       ></detail-goods-info>
       <detail-param-info :paramInfo="paramInfo" />
       <detail-comment-info :commentInfo="commentInfo" />
-      <!-- <detail-recommend-info :recommendList="recommendList" /> -->
+      <detail-recommend-info :recommendList="recommendList" />
     </scroll>
   </div>
 </template>
@@ -25,9 +25,11 @@ import DetailGoodsInfo from "./childComps/DetailGoodsInfo";
 import DetailParamInfo from "./childComps/DetailParamInfo";
 import DetailCommentInfo from "./childComps/DetailCommentInfo";
 
-// import DetailRecommendInfo from "./childComps/DetailRecommendInfo";
+import DetailRecommendInfo from "./childComps/DetailRecommendInfo";
 
 import Scroll from "components/common/scroll/Scroll";
+import { debounce } from "common/utils";
+import { itemListenerMixin } from "common/mixin";
 import {
   getDetail,
   getRecommend,
@@ -46,7 +48,7 @@ export default {
     DetailGoodsInfo,
     DetailParamInfo,
     DetailCommentInfo,
-    // DetailRecommendInfo,
+    DetailRecommendInfo,
   },
 
   data() {
@@ -61,10 +63,11 @@ export default {
       recommendList: [],
     };
   },
+  mixins: [itemListenerMixin],
   created() {
     this.iid = this.$route.params.iid;
     getDetail(this.iid).then((res) => {
-      console.log(res);
+      // console.log(res);
       const data = res.result;
       this.topImages = data.itemInfo.topImages;
       this.goods = new Goods(
@@ -80,16 +83,22 @@ export default {
       );
       this.commentInfo = data.rate.list[0];
     });
-    // getRecommend().then((res2) => {
-    //   console.log(res2);
-    //   this.recommendList = res2.data.list;
-    //   console.log(this.recommendList);
-    // });
+    getRecommend().then((res2) => {
+      // console.log(res2);
+      this.recommendList = res2.data.list;
+      // console.log(this.recommendList);
+    });
   },
   methods: {
     imageLoad() {
       this.$refs.scroll.refresh();
     },
+  },
+  mounted() {},
+  // 该组件没有添加全局缓存，所以使用destroyed监听返回事件
+  destroyed() {
+    // 取消全局监听
+    this.$bus.$off("itemImgLoad", this.itemImgListener);
   },
 };
 </script>

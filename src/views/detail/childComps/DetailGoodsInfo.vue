@@ -12,6 +12,7 @@
         :src="item"
         alt=""
         @load="imgLoad"
+        :key="index"
       />
     </div>
   </div>

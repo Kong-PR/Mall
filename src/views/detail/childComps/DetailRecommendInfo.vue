@@ -5,7 +5,7 @@
       <goods-list-item
         v-for="(item, index) in recommendList"
         :key="index"
-        :goods="item"
+        :goodsListItem="item"
       ></goods-list-item>
     </grid-view>
   </div>
