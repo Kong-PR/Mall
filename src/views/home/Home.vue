@@ -46,7 +46,6 @@ import Scroll from "components/common/scroll/Scroll";
 import BackTop from "components/content/backTop/BackTop";
 
 import { getHomeMultidata, getHomeGoods } from "network/home";
-import { debounce } from "common/utils";
 import { itemListenerMixin } from "common/mixin";
 export default {
   name: "Home",

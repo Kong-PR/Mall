@@ -34,9 +34,9 @@ export default {
   },
   methods: {
     imgLoad() {
-      if (++this.counter === this.imageLength) {
-        this.$emit("imageLoad");
-      }
+      // if (++this.counter === this.imageLength) {
+      this.$emit("imageLoad");
+      // }
     },
   },
   watch: {

@@ -51,7 +51,7 @@ export default {
       this.scroll.finishPullUp();
     },
     refresh() {
-      console.log("-=-=-=-=-=-=");
+      // console.log("-=-=-=-=-=-=");
       this.scroll && this.scroll.refresh();
     },
   },
