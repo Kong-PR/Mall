@@ -1,6 +1,7 @@
 import {
   debounce
 } from "common/utils"
+import BackTop from "components/content/backTop/BackTop";
 export const itemListenerMixin = {
   data() {
     return {
@@ -15,4 +16,28 @@ export const itemListenerMixin = {
     };
     this.$bus.$on("itemImgLoad", this.itemImgListener);
   },
+}
+
+export const backTop = {
+  components: {
+    BackTop
+  },
+  data() {
+    return {
+
+      isShowBackTop: false,
+    }
+
+  },
+  methods: {
+    backClick() {
+      // console.log("点击");
+      this.$refs.scroll.scrollTo(0, 0, 500);
+    },
+    backTopListener(position) {
+
+      this.isShowBackTop = position.y < -1000;
+    }
+
+  }
 }

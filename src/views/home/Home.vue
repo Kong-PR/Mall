@@ -43,10 +43,9 @@ import NavBar from "components/common/navbar/NavBar";
 import TabControl from "components/content/TabControl/TabControl";
 import GoodsList from "components/content/goods/GoodsList";
 import Scroll from "components/common/scroll/Scroll";
-import BackTop from "components/content/backTop/BackTop";
 
 import { getHomeMultidata, getHomeGoods } from "network/home";
-import { itemListenerMixin } from "common/mixin";
+import { itemListenerMixin, backTop } from "common/mixin";
 export default {
   name: "Home",
   components: {
@@ -57,7 +56,6 @@ export default {
     TabControl,
     GoodsList,
     Scroll,
-    BackTop,
   },
   data() {
     return {
@@ -69,13 +67,12 @@ export default {
         sell: { page: 1, list: [] },
       },
       currentType: "pop",
-      isShowBackTop: false,
       isTabFixed: false,
       tabOffsetTop: 0,
       saveY: 0,
     };
   },
-  mixins: [itemListenerMixin],
+  mixins: [itemListenerMixin, backTop],
   created() {
     // 请求多个数据;
     this.getHomeMultidata();
@@ -119,16 +116,13 @@ export default {
       this.$refs.tabControl1.currentIndex = index;
       this.$refs.tabControl2.currentIndex = index;
     },
-    backClick() {
-      // console.log("点击");
-      this.$refs.scroll.scrollTo(0, 0, 500);
-    },
+
     contentScroll(position) {
       // console.log(position);
-      // 判断是否显示返回顶部
-      this.isShowBackTop = position.y < -1000;
       //  判断是否吸顶
       this.isTabFixed = position.y < -this.tabOffsetTop;
+      // 判断是否显示返回顶部
+      this.backTopListener(position);
     },
     contentPullingUp() {
       this.getHomeGoods(this.currentType);

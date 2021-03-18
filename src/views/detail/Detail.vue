@@ -14,6 +14,8 @@
       <detail-recommend-info ref="recommend" :recommendList="recommendList" />
     </scroll>
     <detail-bottom-bar />
+    <!-- native使用监听组件原生事件 -->
+    <back-top @click.native="backClick" v-show="isShowBackTop" />
   </div>
 </template>
 
@@ -30,7 +32,7 @@ import DetailBottomBar from "./childComps/DetailBottomBar";
 
 import Scroll from "components/common/scroll/Scroll";
 import { debounce } from "common/utils";
-import { itemListenerMixin } from "common/mixin";
+import { itemListenerMixin, backTop } from "common/mixin";
 import {
   getDetail,
   getRecommend,
@@ -67,7 +69,7 @@ export default {
       getThemeTopY: null,
     };
   },
-  mixins: [itemListenerMixin],
+  mixins: [itemListenerMixin, backTop],
   created() {
     this.iid = this.$route.params.iid;
     getDetail(this.iid).then((res) => {
@@ -123,6 +125,7 @@ export default {
           break;
         }
       }
+      this.backTopListener(position);
     },
   },
   mounted() {},
