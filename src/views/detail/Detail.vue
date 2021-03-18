@@ -13,6 +13,7 @@
       <detail-comment-info ref="comment" :commentInfo="commentInfo" />
       <detail-recommend-info ref="recommend" :recommendList="recommendList" />
     </scroll>
+    <detail-bottom-bar />
   </div>
 </template>
 
@@ -24,8 +25,8 @@ import DetailShopInfo from "./childComps/DetailShopInfo";
 import DetailGoodsInfo from "./childComps/DetailGoodsInfo";
 import DetailParamInfo from "./childComps/DetailParamInfo";
 import DetailCommentInfo from "./childComps/DetailCommentInfo";
-
 import DetailRecommendInfo from "./childComps/DetailRecommendInfo";
+import DetailBottomBar from "./childComps/DetailBottomBar";
 
 import Scroll from "components/common/scroll/Scroll";
 import { debounce } from "common/utils";
@@ -49,6 +50,7 @@ export default {
     DetailParamInfo,
     DetailCommentInfo,
     DetailRecommendInfo,
+    DetailBottomBar,
   },
 
   data() {
@@ -145,7 +147,7 @@ export default {
   /* background-color: #fff; */
 }
 .content {
-  height: calc(100% - 44px);
+  height: calc(100% - 44px - 49px);
   overflow: hidden;
 }
 </style>
