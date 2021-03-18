@@ -1,7 +1,7 @@
 <template>
   <div id="detail">
-    <detail-nav-bar class="detail-nav" @titleClick="titleClick" />
-    <scroll class="content" ref="scroll">
+    <detail-nav-bar class="detail-nav" @titleClick="titleClick" ref="nav" />
+    <scroll class="content" ref="scroll" :probeType="3" @scroll="contentScroll">
       <detail-swiper :topImages="topImages"></detail-swiper>
       <detail-base-info :goods="goods"></detail-base-info>
       <detail-shop-info :shop="shop"></detail-shop-info>
@@ -107,6 +107,20 @@ export default {
     titleClick(index) {
       console.log("detail");
       this.$refs.scroll.scrollTo(0, -this.themeTopYs[index], 300);
+    },
+    contentScroll(position) {
+      // console.log(position);
+      const positionY = -position.y;
+
+      let len = this.themeTopYs.length;
+      for (let i = len - 1; i >= 0; i--) {
+        if (positionY >= this.themeTopYs[i]) {
+          // console.log(i);
+          // 频繁打印
+          this.$refs.nav.currentIndex = i;
+          break;
+        }
+      }
     },
   },
   mounted() {},
