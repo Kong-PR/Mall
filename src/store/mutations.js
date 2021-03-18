@@ -5,9 +5,10 @@ import {
 export default {
   [ADD_COUNTER](state, payload) {
 
-    payload.count++
+    payload.count += 1
   },
   [ADD_CART](state, payload) {
+    payload.count = 1
     state.cartList.push(payload)
   }
 }

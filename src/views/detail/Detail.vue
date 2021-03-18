@@ -100,7 +100,7 @@ export default {
       this.themeTopYs.push(this.$refs.param.$el.offsetTop - 44);
       this.themeTopYs.push(this.$refs.comment.$el.offsetTop - 44);
       this.themeTopYs.push(this.$refs.recommend.$el.offsetTop - 44);
-      console.log(this.themeTopYs);
+      // console.log(this.themeTopYs);
     }, 100);
   },
   methods: {
@@ -109,7 +109,7 @@ export default {
       this.getThemeTopY();
     },
     titleClick(index) {
-      console.log("detail");
+      // console.log("detail");
       this.$refs.scroll.scrollTo(0, -this.themeTopYs[index], 300);
     },
     contentScroll(position) {
@@ -128,7 +128,7 @@ export default {
       this.backTopListener(position);
     },
     addToCart() {
-      console.log("======");
+      // console.log("======");
       // 添加需要添加的商品信息
       const product = {};
       product.image = this.topImages[0];
@@ -137,7 +137,8 @@ export default {
       product.price = this.goods.realPrice;
       product.iid = this.iid;
       // 将商品添加到购物车
-      this.$store.commit("add_cart", product);
+      // this.$store.commit("addCart", product);
+      this.$store.dispatch("addCart", product);
     },
   },
   mounted() {},
