@@ -13,7 +13,7 @@
       <detail-comment-info ref="comment" :commentInfo="commentInfo" />
       <detail-recommend-info ref="recommend" :recommendList="recommendList" />
     </scroll>
-    <detail-bottom-bar />
+    <detail-bottom-bar @addToCart="addToCart" />
     <!-- native使用监听组件原生事件 -->
     <back-top @click.native="backClick" v-show="isShowBackTop" />
   </div>
@@ -126,6 +126,18 @@ export default {
         }
       }
       this.backTopListener(position);
+    },
+    addToCart() {
+      console.log("======");
+      // 添加需要添加的商品信息
+      const product = {};
+      product.image = this.topImages[0];
+      product.title = this.goods.title;
+      product.desc = this.goods.desc;
+      product.price = this.goods.realPrice;
+      product.iid = this.iid;
+      // 将商品添加到购物车
+      this.$store.commit("add_cart", product);
     },
   },
   mounted() {},
