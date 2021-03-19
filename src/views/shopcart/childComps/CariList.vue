@@ -7,6 +7,7 @@
         :key="index"
       ></cart-list-item>
     </scroll>
+    <cart-bottom-bar />
   </div>
 </template>
 
@@ -14,11 +15,13 @@
 import { mapGetters } from "vuex";
 import Scroll from "components/common/scroll/Scroll";
 import CartListItem from "./CartListItem";
+import CartBottomBar from "./CartBottomBar";
 export default {
   name: "CartList",
   components: {
     Scroll,
     CartListItem,
+    CartBottomBar,
   },
 
   computed: {
@@ -32,7 +35,7 @@ export default {
 
 <style scoped>
 .cart-list {
-  height: calc(100% - 44px - 49px);
+  height: calc(100% - 44px - 49px - 40px);
 }
 .content {
   height: 100%;
