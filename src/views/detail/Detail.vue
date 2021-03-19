@@ -16,6 +16,7 @@
     <detail-bottom-bar @addToCart="addToCart" />
     <!-- native使用监听组件原生事件 -->
     <back-top @click.native="backClick" v-show="isShowBackTop" />
+    <toast :message="message" :show="show" />
   </div>
 </template>
 
@@ -33,6 +34,8 @@ import DetailBottomBar from "./childComps/DetailBottomBar";
 import Scroll from "components/common/scroll/Scroll";
 import { debounce } from "common/utils";
 import { itemListenerMixin, backTop } from "common/mixin";
+import { mapActions } from "vuex";
+import Toast from "components/common/toast/Toast";
 import {
   getDetail,
   getRecommend,
@@ -53,6 +56,7 @@ export default {
     DetailCommentInfo,
     DetailRecommendInfo,
     DetailBottomBar,
+    Toast,
   },
 
   data() {
@@ -67,6 +71,8 @@ export default {
       recommendList: [],
       themeTopYs: [],
       getThemeTopY: null,
+      message: "",
+      show: false,
     };
   },
   mixins: [itemListenerMixin, backTop],
@@ -104,6 +110,7 @@ export default {
     }, 100);
   },
   methods: {
+    ...mapActions(["addCart"]),
     imageLoad() {
       this.$refs.scroll.refresh();
       this.getThemeTopY();
@@ -138,7 +145,20 @@ export default {
       product.iid = this.iid;
       // 将商品添加到购物车
       // this.$store.commit("addCart", product);
-      this.$store.dispatch("addCart", product);
+      // this.$store.dispatch("addCart", product).then((res) => {
+      //   console.log(res);
+      // });
+      // 添加吐司
+      this.addCart(product).then((res) => {
+        // this.message = res;
+        // this.show = true;
+        // setTimeout(() => {
+        //   this.show = false;
+        //   this.message = "";
+        // }, 1500);
+        // console.log(res);
+        this.$toast.show(res, 1500);
+      });
     },
   },
   mounted() {},
