@@ -20,7 +20,9 @@ Vue.use(toast)
 FastClick.attach(document.body)
 
 // 图片懒加载
-Vue.use(VueLazyLoad)
+Vue.use(VueLazyLoad, {
+  loading: require("./assets/img/common/placeholder.png")
+})
 new Vue({
   render: h => h(App),
   router,
